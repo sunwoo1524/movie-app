@@ -6,6 +6,7 @@ function App() {
   return (
     <div>
       <h1>Hello, world</h1>
+      <Food fav="떡볶이" />
     </div>
   )
 }
