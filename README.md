@@ -1,4 +1,3 @@
-# Movie App 2022
+# React Movie App
 
-
-React JS Fundamentals Course 2022
+Thanks Nico and Nomad Coders!
