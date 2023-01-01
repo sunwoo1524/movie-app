@@ -26,5 +26,8 @@
     .movies {
         grid-template-columns: 1fr;
         width: 100%;
+        padding: 0;
+        padding-top: 70px;
     }
+   
 }
