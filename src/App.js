@@ -1,49 +1,57 @@
 import React from "react";
+import axios from "axios";
+import Movie from "./Movie";
+import "./App.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log("fuck you");
-  }
-  
   state = {
-    count: 0,
+    isLoading: true,
+    movies: [],
   };
 
-  add = () => {
-    this.setState(current => ({
-      count: current.count + 1,
-    }));
-  };
+  getMovies = async () => {
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get("https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=rating");
 
-  minus = () => {
-    this.setState(current => ({
-      count: current.count - 1,
-    }));
-  };
+    this.setState({ movies, isLoading: false });
+  }
 
   componentDidMount() {
-    console.log("componentrendered!")
-  }
-
-  componentDidUpdate() {
-    console.log("없데이트")
-  }
-
-  componentWillUnmount() {
-    console.log("Fuck off mann")
+    this.getMovies();
   }
 
   render() {
-    console.log("I'm rendering");
+    const { isLoading, movies } = this.state;
+
     return (
-      <div>
-        <h1>The number is: {this.state.count}</h1>
-        <button onClick={this.add}>ADD!</button>
-        <button onClick={this.minus}>Mㅏ이나su</button>
-      </div>
+      <section className="container">
+        {isLoading ? (
+          <div className="loader">
+            <h1>로딩중학교...</h1>
+          </div>
+        ) : (
+          <div className="movies">
+            {
+              movies.map(movie => {
+                return <Movie
+                          key={movie.id}
+                          id={movie.id}
+                          title={movie.title}
+                          year={movie.year}
+                          summary={movie.summary}
+                          poster={movie.medium_cover_image}
+                          genres={movie.genres}
+                       />;
+              })
+            }
+          </div>
+        )}
+      </section>
     );
-  };
+  }
 }
 
 export default App;
